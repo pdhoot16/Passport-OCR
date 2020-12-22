@@ -167,38 +167,38 @@ app.layout = html.Div([
 ])
 
 
-@app.callback(
-    [dash.dependencies.Output('given-name', 'children'),
-     dash.dependencies.Output('surname', 'children'),
-     dash.dependencies.Output('dob', 'children'),
-     dash.dependencies.Output('doi', 'children'),
-     dash.dependencies.Output('doe', 'children'),
-     dash.dependencies.Output('mrz-code', 'children'),
-     dash.dependencies.Output('birth-place', 'children'),
-     dash.dependencies.Output('gender', 'children'),
-     dash.dependencies.Output('passport-no', 'children')],
-    [dash.dependencies.Input('front-upload', 'filename')]
-)
-def frontpage_ocr(selected_value):
-    custom_config = r'--oem 3 --psm 6'
-    img = cv2.imread(selected_value)
-    img_text = pytesseract.image_to_string(img, config=custom_config)
-    dates = find_dates(img_text)
-    dob = dates[0]
-    doi = dates[1]
-    doe = dates[2]
-    mrz_code = find_mrz_code(img_text)
-    given_name = find_name(img_text)[0]
-    surname = find_name(img_text)[1]
-    passport_no = find_passport_no(img_text)
-    gender = find_gender(img_text)
-    place_of_birth = find_place_of_birth(img_text)
-    #     data_front = {'Given Name': given_name, 'Surname':surname ,'Passport No.':passport_no, 'Gender':gender,
-    #                   'Place of Birth':place_of_birth,
-    #                   'Date of Birth':dob, 'Date of Issue':doi, 'Date of Expiry':doe,
-    #                   'MRZ code':mrz_code}
-    #     json_front = json.dumps(data_front)
-    return given_name, surname, dob, doi, doe, mrz_code, place_of_birth, gender, passport_no
+# @app.callback(
+#     [dash.dependencies.Output('given-name', 'children'),
+#      dash.dependencies.Output('surname', 'children'),
+#      dash.dependencies.Output('dob', 'children'),
+#      dash.dependencies.Output('doi', 'children'),
+#      dash.dependencies.Output('doe', 'children'),
+#      dash.dependencies.Output('mrz-code', 'children'),
+#      dash.dependencies.Output('birth-place', 'children'),
+#      dash.dependencies.Output('gender', 'children'),
+#      dash.dependencies.Output('passport-no', 'children')],
+#     [dash.dependencies.Input('front-upload', 'filename')]
+# )
+# def frontpage_ocr(selected_value):
+#     custom_config = r'--oem 3 --psm 6'
+#     img = cv2.imread(selected_value)
+#     img_text = pytesseract.image_to_string(img, config=custom_config)
+#     dates = find_dates(img_text)
+#     dob = dates[0]
+#     doi = dates[1]
+#     doe = dates[2]
+#     mrz_code = find_mrz_code(img_text)
+#     given_name = find_name(img_text)[0]
+#     surname = find_name(img_text)[1]
+#     passport_no = find_passport_no(img_text)
+#     gender = find_gender(img_text)
+#     place_of_birth = find_place_of_birth(img_text)
+#     #     data_front = {'Given Name': given_name, 'Surname':surname ,'Passport No.':passport_no, 'Gender':gender,
+#     #                   'Place of Birth':place_of_birth,
+#     #                   'Date of Birth':dob, 'Date of Issue':doi, 'Date of Expiry':doe,
+#     #                   'MRZ code':mrz_code}
+#     #     json_front = json.dumps(data_front)
+#     return [given_name, surname, dob, doi, doe, mrz_code, place_of_birth, gender, passport_no]
 
 
 @app.callback(
@@ -209,7 +209,18 @@ def father_name_ocr(filename):
     custom_config = r'--oem 3 --psm 6'
     img = cv2.imread(filename)
     img_text = pytesseract.image_to_string(img, config=custom_config)
-    return names(img_text)[0]
+    li = img_text.splitlines(True)
+    guardian_name = ""
+    # mother_name = ""
+    # spouse_name = ""
+
+    for i in range(0, len(li)):
+        line_text = li[i]
+        if (line_text.find("Name of Father") > 0):
+            guardian_name = next_line_text = li[i + 1]
+            guardian_name = re.sub('[^A-Z]+', ' ', guardian_name)
+    
+    return guardian_name
 
 # def backpage_ocr(selected_value):
 #     custom_config = r'--oem 3 --psm 6'
