@@ -1,18 +1,12 @@
 import dash
 import dash_core_components as dcc
 import dash_html_components as html
-import dash_table
-import dash_bootstrap_components as dbc
-
-import os
 import re
 import cv2
-import json
-import tkinter
-import datetime
+# import json
+# import datetime
 import pytesseract
-import numpy as np
-from tkinter import filedialog
+# import numpy as np
 
 pytesseract.pytesseract.tesseract_cmd = r'C:\Program Files\Tesseract-OCR\tesseract.exe'
 states = ("Andhra Pradesh", "Arunachal Pradesh ", "Assam", "Bihar", "Chhattisgarh", "Goa", "Gujarat",
@@ -46,7 +40,6 @@ def find_mrz_code(text):
     mrz_code = text.split("P<", 1)[1]
     mrz_code = mrz_code.replace(" ", "")
     return mrz_code
-
 
 # Method to extract name
 def find_name(text):
