@@ -1,1 +1,1 @@
-web: gunicorn app:ocrapp
+web: gunicorn app:ocr_app
