@@ -18,6 +18,7 @@ states = ("Andhra Pradesh", "Arunachal Pradesh ", "Assam", "Bihar", "Chhattisgar
 
 
 # Method to extract date of issue and expiry
+@app.route('/find_dates/', methods=['POST'])
 def find_dates(text):
     date = re.findall('\d{2}/\d{2}/\d{4}', text)
     if (len(date) == 3):
@@ -36,12 +37,14 @@ def find_dates(text):
 
 
 # Method to extract MRZ code
+@app.route('/find_mrz_code/', methods=['POST'])
 def find_mrz_code(text):
     mrz_code = text.split("P<", 1)[1]
     mrz_code = mrz_code.replace(" ", "")
     return mrz_code
 
 # Method to extract name
+@app.route('/find_name/', methods=['POST'])
 def find_name(text):
     mrz_code = find_mrz_code(text)
     last_name = mrz_code.split("<<", 1)[0]
@@ -52,12 +55,13 @@ def find_name(text):
 
 
 # Method to extract Passport number
+@app.route('/find_passport_no/', methods=['POST'])
 def find_passport_no(text):
     mrz_code = find_mrz_code(text)
     p_no = mrz_code.split("\n", 1)[1]
     return p_no[0:8]
 
-
+@app.route('/find_gender/', methods=['POST'])
 def find_gender(text):
     if text.find(" M ") > 0:
         return "Male"
@@ -66,7 +70,7 @@ def find_gender(text):
     else:
         return "Unknown"
 
-
+@app.route('/find_place_of_birth/', methods=['POST'])
 def find_place_of_birth(text):
     birth_place = ""
     li = text.splitlines(True)
@@ -79,7 +83,7 @@ def find_place_of_birth(text):
                     birth_place = re.sub('[^A-Z]+', ' ', line_text)
     return birth_place
 
-
+@app.route('/file_no/', methods=['POST'])
 def file_no(text):
     lines = text.splitlines(True)
     file_no = lines[-2]
@@ -87,7 +91,7 @@ def file_no(text):
     file_no = file_no[0:15]
     return file_no
 
-
+@app.route('/find_address/', methods=['POST'])
 def find_address(text):
     li = text.splitlines(True)
     address = ""
@@ -97,7 +101,7 @@ def find_address(text):
             address = li[i - 2] + li[i - 1] + li[i]
     return address
 
-
+@app.route('/names/', methods=['POST'])
 def names(text):
     li = text.splitlines(True)
     guardian_name = ""
