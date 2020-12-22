@@ -119,7 +119,7 @@ def names(text):
 
 
 app = dash.Dash()
-
+server = app.server
 app.layout = html.Div([
     html.Label([
         html.Label("Select front page of passport:"),
@@ -219,4 +219,4 @@ def backpage_ocr(selected_value):
 
 
 if __name__ == '__main__':
-    app.run_server()
+    app.run_server(debug=True)
