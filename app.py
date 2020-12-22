@@ -202,7 +202,7 @@ def frontpage_ocr(selected_value):
 
 
 @app.callback(
-    dash.dependencies.Output('father-name', 'children')
+    dash.dependencies.Output('father-name', 'children'),
     [dash.dependencies.Input('back-upload', 'filename')]
 )
 def father_name_ocr(filename):
