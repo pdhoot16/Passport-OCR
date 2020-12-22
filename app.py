@@ -125,9 +125,9 @@ def names(text):
     return guardian_name, mother_name, spouse_name
 
 
-ocr_app = dash.Dash()
+app = dash.Dash()
 
-ocr_app.layout = html.Div([
+app.layout = html.Div([
     html.Label([
         html.Label("Select front page of passport:"),
         dcc.Upload([html.Button('Upload File')], id='front-upload'),
@@ -170,7 +170,7 @@ ocr_app.layout = html.Div([
 ])
 
 
-@ocr_app.callback(
+@app.callback(
     [dash.dependencies.Output('given-name', 'children'),
      dash.dependencies.Output('surname', 'children'),
      dash.dependencies.Output('dob', 'children'),
@@ -204,7 +204,7 @@ def frontpage_ocr(selected_value):
     return given_name, surname, dob, doi, doe, mrz_code, place_of_birth, gender, passport_no
 
 
-@ocr_app.callback(
+@app.callback(
     [dash.dependencies.Output('father-name', 'children'),
      dash.dependencies.Output('mother-name', 'children'),
      dash.dependencies.Output('spouse-name', 'children'),
@@ -226,4 +226,4 @@ def backpage_ocr(selected_value):
 
 
 if __name__ == '__main__':
-    ocr_app.run_server()
+    app.run_server()
