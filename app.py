@@ -223,12 +223,12 @@ def father_name_ocr(filename):
 #     f_no = file_no(img_text)
 #     return father_name, mother_name, spouse_name, address, f_no
 
-@app.callback(
-    dash.dependencies.Output('mother-name', 'children'),
-    [dash.dependencies.Input('back-upload', 'filename')]
-)
-def mother_name_ocr(selected_value):
-    return names(selected_value)[1]
+# @app.callback(
+#     dash.dependencies.Output('mother-name', 'children'),
+#     [dash.dependencies.Input('back-upload', 'filename')]
+# )
+# def mother_name_ocr(selected_value):
+#     return names(selected_value)[1]
 
      # dash.dependencies.Output('spouse-name', 'children'),
      # dash.dependencies.Output('address', 'children'),
